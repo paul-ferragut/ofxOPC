@@ -8,6 +8,16 @@
 #include "ofxNetwork.h"
 #include "ofxNeoPixels.h"
 
+// CHANNEL NUMBERS
+#define CHANNEL_ONE 1
+#define CHANNEL_TWO 2
+#define CHANNEL_THREE 3
+#define CHANNEL_FOUR 4
+#define CHANNEL_FIVE 5
+#define CHANNEL_SIX 6
+#define CHANNEL_SEVEN 7
+#define CHANNEL_EIGHT 8
+
 //------------------------------------------------------------------------------
 typedef struct OPCPacket_Header {
     // Standard OPC-packet header
@@ -99,13 +109,5 @@ class ofxOPC  {
         size_t OPC_SPC_packet_length;
         OPCPacket_SPCData_t OPC_SPC_packet_data;
     
-        // CHANNEL NUMBERS
-        const int CHANNEL_ONE = 1;
-        const int CHANNEL_TWO = 2;
-        const int CHANNEL_THREE = 3;
-        const int CHANNEL_FOUR = 4;
-        const int CHANNEL_FIVE = 5;
-        const int CHANNEL_SIX = 6;
-        const int CHANNEL_SEVEN = 7;
-        const int CHANNEL_EIGHT = 8;
+
 };
