@@ -6,7 +6,7 @@
 //
 #include "ofxOPC.h"
 //--------------------------------------------------------------
-void ofxOPC::setup(string address, int port)
+void ofxOPC::setup(string address, int port,int fadeCandyNumber)
 {
     // Copy the Address and port to the variables
     _port = port;
@@ -20,8 +20,10 @@ void ofxOPC::setup(string address, int port)
     // Connect to the Server
     connect();
     
+    channelNumber=8*fadeCandyNumber;
+    
     // Determine the length of the data section, as a multiple of the SPCData type
-    uint16_t data_length = 8 * 64 * sizeof(OPCPacket_SPCData_t);
+    uint16_t data_length = channelNumber * 64 * sizeof(OPCPacket_SPCData_t);
     
     // Add the header-section's length to the data-section's to determine the total packet length; allocate the packet
     OPC_SPC_packet_length = sizeof(OPCPacket_Header_t) + data_length;
@@ -50,46 +52,6 @@ void ofxOPC::update()
     timer = ofGetElapsedTimeMillis() - startTime;
 }
 //--------------------------------------------------------------
-void ofxOPC::writeChannelOne(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_ONE, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelTwo(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_TWO, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelThree(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_THREE, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelFour(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_FOUR, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelFive(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_FIVE, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelSix(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_SIX, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelSeven(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_SEVEN, pix);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelEight(vector<ofColor>pix)
-{
-    writeChannel(CHANNEL_EIGHT, pix);
-}
-//--------------------------------------------------------------
 void ofxOPC::writeChannel(uint8_t channel, vector<ofColor>pix)
 {
     // Bail early if there's no pixel data
@@ -97,7 +59,7 @@ void ofxOPC::writeChannel(uint8_t channel, vector<ofColor>pix)
     {
         return;
 
-    } else if(channel < 1 || channel > 8) {
+    } else if(channel < 1 || channel > channelNumber) {
         // TODO: Emit error
         return;
     }
@@ -126,7 +88,7 @@ void ofxOPC::writeChannel(uint8_t channel, vector <ofColor> pix1,vector <ofColor
     {
         return;
         
-    } else if(channel < 1 || channel > 8) {
+    } else if(channel < 1 || channel > channelNumber) {
         // TODO: Emit error
         return;
     }
@@ -143,46 +105,6 @@ void ofxOPC::writeChannel(uint8_t channel, vector <ofColor> pix1,vector <ofColor
     
     // Send the data
     client.sendRawBytes((char *)(OPC_SPC_packet), OPC_SPC_packet_length);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelOne(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_ONE, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelTwo(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_TWO, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelThree(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_THREE, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelFour(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_FOUR, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelFive(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_FIVE, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelSix(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_SIX, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelSeven(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_SEVEN, pix1,pix2,pix3);
-}
-//--------------------------------------------------------------
-void ofxOPC::writeChannelEight(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3)
-{
-    writeChannel(CHANNEL_EIGHT, pix1,pix2,pix3);
 }
 //--------------------------------------------------------------
 void ofxOPC::draw()

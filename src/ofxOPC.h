@@ -8,15 +8,7 @@
 #include "ofxNetwork.h"
 #include "ofxNeoPixels.h"
 
-// CHANNEL NUMBERS
-#define CHANNEL_ONE 1
-#define CHANNEL_TWO 2
-#define CHANNEL_THREE 3
-#define CHANNEL_FOUR 4
-#define CHANNEL_FIVE 5
-#define CHANNEL_SIX 6
-#define CHANNEL_SEVEN 7
-#define CHANNEL_EIGHT 8
+
 
 //------------------------------------------------------------------------------
 typedef struct OPCPacket_Header {
@@ -50,7 +42,7 @@ typedef struct OPCPacket {
 class ofxOPC  {
     
     public:
-        void setup(string address,int port);
+        void setup(string address,int port,int fadeCandyNumber);
         void update();
         void draw();
     
@@ -63,27 +55,6 @@ class ofxOPC  {
     
         // For writing custom channels
         void writeChannel(uint8_t channel, vector <ofColor> pix);
-    
-        // Write Channels or Pin data
-        void writeChannelOne(vector <ofColor> pix);
-        void writeChannelTwo(vector <ofColor> pix);
-        void writeChannelThree(vector <ofColor> pix);
-        void writeChannelFour(vector <ofColor> pix);
-        void writeChannelFive(vector <ofColor> pix);
-        void writeChannelSix(vector <ofColor> pix);
-        void writeChannelSeven(vector <ofColor> pix);
-        void writeChannelEight(vector <ofColor> pix);
-    
-        //Chaining TODO:
-        void writeChannel(uint8_t channel, vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelOne(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelTwo(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelThree(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelFour(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelFive(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelSix(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelSeven(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
-        void writeChannelEight(vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
 
         string _address;
         int _port;
@@ -93,6 +64,8 @@ class ofxOPC  {
     
         void connect();
         void disconnect();
+    
+        int channelNumber;
     
         // For sending our data packets out to the Server
         ofxTCPClient client;
