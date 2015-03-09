@@ -55,6 +55,7 @@ class ofxOPC  {
     
         // For writing custom channels
         void writeChannel(uint8_t channel, vector <ofColor> pix);
+        void writeChannel(uint8_t channel, vector <ofColor> pix1,vector <ofColor> pix2,vector <ofColor> pix3);
 
         string _address;
         int _port;
